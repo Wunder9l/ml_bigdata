@@ -1,0 +1,15 @@
+### Use the same script for mean value and for variance, because
+### there is a need for mean in variance (there no sense to compute
+### a mean value separately)
+
+# Mean value of price #
+computed with numpy:
+152.7206871868289
+computed with hadoop
+152.720687186829
+
+# Variance of price #
+computed with numpy:
+57674.02524696099
+computed with hadoop
+57672.84569843337

@@ -1,0 +1,19 @@
+hdfs dfs -mkdir /first_dir
+hdfs dfs -mkdir /first_dir/nested_dir
+# Thrash - is special directory. Files can be restored quickly as long as they remains in trash.
+# To remove file completely we need add option -skipTrash (It will not send the file to Trash)
+hdfs dfs -touchz /first_dir/nested_dir/empty_file
+hdfs dfs -rm -skipTrash -R /first_dir
+sudo docker cp AB_NYC_2019.csv namenode:/
+hdfs dfs -mkdir /1st_hw
+hdfs dfs -put AB_NYC_2019.csv /1st_hw/AB_NYC_2019.csv
+hdfs dfs -cat /1st_hw/AB_NYC_2019.csv
+hdfs dfs -tail /1st_hw/AB_NYC_2019.csv
+hdfs dfs -head /1st_hw/AB_NYC_2019.csv
+hdfs dfs -mkdir /1st_hw/other_location
+hdfs dfs -cp /1st_hw/AB_NYC_2019.csv  /1st_hw/other_location/AB_NYC_2019_copy.csv
+time hdfs dfs -setrep -w 2 /1st_hw/AB_NYC_2019.csv
+# it took: real	0m11.906s
+time hdfs dfs -setrep -w 4 /1st_hw/AB_NYC_2019.csv
+hdfs fsck /1st_hw/AB_NYC_2019.csv -files -blocks -locations
+hdfs fsck /1st_hw/AB_NYC_2019.csv  -blockId blk_1073741830
