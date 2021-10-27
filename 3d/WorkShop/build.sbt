@@ -12,3 +12,5 @@ libraryDependencies  ++= Seq(
   // It depends on LGPL code
   "org.scalanlp" %% "breeze-viz" % "1.2"
 )
+
+libraryDependencies += "com.github.darrenjw" %% "scala-glm" % "0.7"
