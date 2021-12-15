@@ -2,7 +2,6 @@ package linear_regression
 
 import au.com.bytecode.opencsv.{CSVReader, CSVWriter}
 import breeze.linalg._
-import scalaglm.Lm
 
 import java.io._
 import scala.collection.immutable.HashMap
@@ -51,7 +50,7 @@ object Main {
 
   def main(array: Array[String]): Unit = {
 
-    val prefix = "/Users/wunder9l/projects/mail_ru/made/3semestr/bigdata/homeworks/3d/WorkShop/"
+    val prefix = "/Users/wunder9l/projects/mail_ru/made/3semestr/bigdata/homeworks/5th/LinearRegressionBreeze/"
     val filename = prefix ++ "data/insurance.csv"
     val input = new FileReader(filename)
 
@@ -69,15 +68,14 @@ object Main {
     val y = res._2
 
     val COLUMN_NAMES = List("Age", "Sex", "Bmi", "Children", "Smoker", "Region")
-    val lm = Lm(y,X,COLUMN_NAMES)
-    lm.plots
 
+    val myLm = new MyLinearRegression(COLUMN_NAMES, X, y)
     val testXy = toFeaturesAndTarget(trainTest._2)
-    val pred = lm.predict(testXy._1)
+    val pred = myLm.predict(testXy._1).toDenseMatrix.t
     var output = testXy._1
-    val actualY = testXy._2.toDenseMatrix.reshape(output.rows, 1)
-    output = DenseMatrix.horzcat(output, actualY.toDenseMatrix)
-    output = DenseMatrix.horzcat(output, pred.fitted.toDenseMatrix.reshape(output.rows, 1))
+    val actualY = testXy._2.toDenseMatrix.t
+    output = DenseMatrix.horzcat(output, actualY)
+    output = DenseMatrix.horzcat(output, pred)
 
     val outFilename = prefix ++ "data/results.csv"
     val outputFile = new FileWriter(outFilename)
